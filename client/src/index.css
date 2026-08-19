@@ -1,0 +1,156 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    touch-action: manipulation;
+    scroll-behavior: smooth;
+    background-color: #0B0F17 !important;
+    color: #FFFFFF !important;
+  }
+
+  body {
+    background-color: #0B0F17 !important;
+    color: #FFFFFF !important;
+    font-family: 'Poppins', sans-serif;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── Universal Input & Form Fields Dark High Contrast Override ── */
+  input, select, textarea {
+    background-color: #1E293B !important;
+    color: #FFFFFF !important;
+    border-color: #475569 !important;
+  }
+
+  input::placeholder, textarea::placeholder {
+    color: #94A3B8 !important;
+  }
+
+  /* Fix Chrome / Edge Autofill yellow/white background issue */
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover, 
+  input:-webkit-autofill:focus,
+  textarea:-webkit-autofill,
+  textarea:-webkit-autofill:hover,
+  textarea:-webkit-autofill:focus,
+  select:-webkit-autofill,
+  select:-webkit-autofill:hover,
+  select:-webkit-autofill:focus {
+    -webkit-text-fill-color: #FFFFFF !important;
+    -webkit-box-shadow: 0 0 0px 1000px #1E293B inset !important;
+    transition: background-color 5000s ease-in-out 0s;
+  }
+}
+
+/* ── Custom Dark Scrollbar ── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: #0B0F17; }
+::-webkit-scrollbar-thumb { background: #334155; border-radius: 9999px; }
+::-webkit-scrollbar-thumb:hover { background: #059669; }
+
+.scroll-hide { scrollbar-width: none; -ms-overflow-style: none; }
+.scroll-hide::-webkit-scrollbar { display: none; }
+
+/* ── High Contrast Glassmorphism ── */
+.glass-panel {
+  background: #1E293B !important;
+  border: 1px solid #334155 !important;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5) !important;
+}
+
+.glass-nav {
+  background: #0F172A !important;
+  border-bottom: 1px solid #334155 !important;
+}
+
+.glass-card {
+  background: #1E293B !important;
+  border: 1px solid #334155 !important;
+}
+
+.glass-card:hover {
+  border-color: #059669 !important;
+  box-shadow: 0 0 20px rgba(5,150,105,0.4) !important;
+}
+
+/* ── Bottom Navigation ── */
+.bottom-nav {
+  position: fixed;
+  bottom: 0; left: 0; right: 0; z-index: 50;
+  background: #0F172A !important;
+  border-top: 1px solid #334155 !important;
+  box-shadow: 0 -4px 24px rgba(0,0,0,0.8) !important;
+}
+
+/* ── Skeleton Shimmer ── */
+.skeleton {
+  background: linear-gradient(90deg, #1E293B 25%, #334155 50%, #1E293B 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* ── Veg / Non-veg Indicators ── */
+.veg-indicator {
+  width: 16px; height: 16px;
+  border: 1.5px solid #10B981;
+  display: inline-flex; align-items: center; justify-content: center;
+  border-radius: 3px; padding: 1px;
+}
+.veg-indicator::after {
+  content: ''; width: 8px; height: 8px;
+  background-color: #10B981; border-radius: 50%;
+  box-shadow: 0 0 6px rgba(16, 185, 129, 0.8);
+}
+.nonveg-indicator {
+  width: 16px; height: 16px;
+  border: 1.5px solid #EF4444;
+  display: inline-flex; align-items: center; justify-content: center;
+  border-radius: 3px; padding: 1px;
+}
+.nonveg-indicator::after {
+  content: ''; width: 0; height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-bottom: 7px solid #EF4444;
+}
+
+/* ── Dark Map Leaflet Invert ── */
+.leaflet-container {
+  width: 100%; height: 100%;
+  border-radius: 1.25rem; z-index: 1;
+}
+.dark-map .leaflet-tile-pane {
+  filter: brightness(0.6) invert(1) contrast(3) hue-rotate(200deg) saturate(0.3) brightness(0.7);
+}
+
+/* ── High Contrast Inputs ── */
+.vin-input {
+  background-color: #1E293B !important;
+  color: #FFFFFF !important;
+  border: 1px solid #475569 !important;
+}
+.vin-input:focus {
+  outline: none;
+  border-color: #059669 !important;
+  box-shadow: 0 0 0 3px rgba(5,150,105,0.3) !important;
+}
+
+/* ── Notifications Panel Slide-In ── */
+@keyframes slideInRight {
+  from { transform: translateX(100%); opacity: 0; }
+  to   { transform: translateX(0);    opacity: 1; }
+}
+.animate-slide-in-right {
+  animation: slideInRight 0.28s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}

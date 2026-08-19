@@ -1,0 +1,11 @@
+{
+  "name": "vendigo",
+  "version": "1.0.0",
+  "description": "VENDIGO Street Food Marketplace - Unified Monorepo",
+  "main": "server/server.js",
+  "type": "module",
+  "scripts": {
+    "build": "cd client && npm install && npm run build && cd ../server && npm install",
+    "start": "cd server && node server.js"
+  }
+}
