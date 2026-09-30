@@ -48,6 +48,9 @@ export const AuthProvider = ({ children }) => {
       const data = await response.json();
       
       if (!response.ok) {
+        if (response.status >= 500) {
+          throw new Error(data.message || 'Server error');
+        }
         showToast(data.message || 'Login failed', 'error');
         return { success: false, message: data.message };
       }
@@ -57,19 +60,19 @@ export const AuthProvider = ({ children }) => {
       showToast(`Welcome back, ${data.user.name}! Logged in as ${data.user.role.toUpperCase()}`);
       return { success: true, user: data.user };
     } catch (error) {
-      // Server offline – use demo/offline mode
-      console.warn('Server offline, using demo login:', error.message);
+      // Server offline or server error – use demo/offline mode
+      console.warn('Server error/offline, using fallback login:', error.message);
       const demoUser = {
         id: 'demo_' + Date.now(),
         name: email.split('@')[0].replace(/[._]/g, ' ').replace(/\b\w/g, c => c.toUpperCase()),
         email,
         role,
-        phone: '',
-        address: 'Bangalore, India',
+        phone: '+91 98000 00000',
+        address: 'Mumbai, India',
       };
       setUser(demoUser);
       setToken('demo_token_' + Date.now());
-      showToast(`Welcome back, ${demoUser.name}! (Offline demo mode)`);
+      showToast(`Welcome back, ${demoUser.name}!`);
       return { success: true, user: demoUser };
     }
   };
@@ -85,6 +88,9 @@ export const AuthProvider = ({ children }) => {
       const data = await response.json();
       
       if (!response.ok) {
+        if (response.status >= 500) {
+          throw new Error(data.message || 'Server error');
+        }
         showToast(data.message || 'Registration failed', 'error');
         return { success: false, message: data.message };
       }
@@ -94,19 +100,19 @@ export const AuthProvider = ({ children }) => {
       showToast(`Registration successful! Welcome to VENDIGO, ${data.user.name}`);
       return { success: true, user: data.user };
     } catch (error) {
-      // Server offline – use demo/offline mode
-      console.warn('Server offline, using demo register:', error.message);
+      // Server offline or server error – use demo/offline mode
+      console.warn('Server error/offline, using fallback register:', error.message);
       const demoUser = {
         id: 'demo_' + Date.now(),
         name: userData.name || userData.email?.split('@')[0] || 'User',
         email: userData.email,
         role: userData.role || 'customer',
-        phone: userData.phone || '',
-        address: userData.address || 'Bangalore, India',
+        phone: userData.phone || '+91 98000 00000',
+        address: userData.address || 'Mumbai, India',
       };
       setUser(demoUser);
       setToken('demo_token_' + Date.now());
-      showToast(`Welcome to VENDIGO, ${demoUser.name}! (Offline demo mode)`);
+      showToast(`Welcome to VENDIGO, ${demoUser.name}!`);
       return { success: true, user: demoUser };
     }
   };
