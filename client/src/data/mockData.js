@@ -18,7 +18,7 @@ export const INITIAL_CATEGORIES = [
   { id: 'vada-pav', name: 'Vada Pav & Misal', icon: 'Flame', image: 'https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=400&q=80' },
   { id: 'sandwich', name: 'Bombay Sandwich', icon: 'Sandwich', image: 'https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=400&q=80' },
   { id: 'pav-bhaji', name: 'Butter Pav Bhaji', icon: 'Flame', image: 'https://images.unsplash.com/photo-1626132647523-66f5bf380027?auto=format&fit=crop&w=400&q=80' },
-  { id: 'chaat', name: 'Bhel & Sev Puri', icon: 'Utensils', image: 'https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=400&q=80' },
+  { id: 'chaat', name: 'Bhel & Sev Puri', icon: 'Utensils', image: 'https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?auto=format&fit=crop&w=400&q=80' },
   { id: 'frankie', name: 'Tibetan & Frankies', icon: 'Sandwich', image: 'https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?auto=format&fit=crop&w=400&q=80' },
   { id: 'dosa', name: 'Dosa & Mysore Masala', icon: 'Sun', image: 'https://images.unsplash.com/photo-1668236543090-82eba5ee5976?auto=format&fit=crop&w=400&q=80' },
   { id: 'desserts', name: 'Baraf Gola & Kulfi', icon: 'IceCream', image: 'https://images.unsplash.com/photo-1579954115545-aad55763426b?auto=format&fit=crop&w=400&q=80' },
@@ -1263,7 +1263,7 @@ export const INITIAL_MENU_ITEMS = [
     category: 'Vada Pav & Misal',
     isVeg: true,
     isAvailable: true,
-    image: 'https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=400&q=80',
+    image: 'https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=400&q=400&q=80',
     description: 'Hot spicy potato vada fried crisp in peanut oil, coated in melted Amul butter and sweet-spicy dry garlic chutney.'
   },
   {
@@ -1274,7 +1274,7 @@ export const INITIAL_MENU_ITEMS = [
     category: 'Vada Pav & Misal',
     isVeg: true,
     isAvailable: true,
-    image: 'https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=400&q=80',
+    image: 'https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=400&q=400&q=80',
     description: 'Crispy batata vada loaded with grated Amul cheese and homemade fiery Chinese Schezwan sauce.'
   },
   {
@@ -1285,7 +1285,7 @@ export const INITIAL_MENU_ITEMS = [
     category: 'Vada Pav & Misal',
     isVeg: true,
     isAvailable: true,
-    image: 'https://images.unsplash.com/photo-1626132647523-66f5bf380027?auto=format&fit=crop&w=400&q=80',
+    image: 'https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?auto=format&fit=crop&w=400&q=80',
     description: 'Spicy sprouted moth beans gravy topped with crunchy farsan, chopped onions, coriander, lemon wedge, and 2 soft pavs.'
   },
   {
@@ -1296,7 +1296,7 @@ export const INITIAL_MENU_ITEMS = [
     category: 'Vada Pav & Misal',
     isVeg: true,
     isAvailable: true,
-    image: 'https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=400&q=80',
+    image: 'https://images.unsplash.com/photo-1606491956689-2ea866880c84?auto=format&fit=crop&w=400&q=80',
     description: 'Crispy fried onion fritters seasoned with carom seeds and green chillies.'
   },
 
@@ -1357,7 +1357,7 @@ export const INITIAL_MENU_ITEMS = [
     category: 'Cutting Chai & Juices',
     isVeg: true,
     isAvailable: true,
-    image: 'https://images.unsplash.com/photo-1561336313-0bd5e0b27ec8?auto=format&fit=crop&w=400&q=80',
+    image: 'https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&w=400&q=80',
     description: 'Freshly extracted sweet lime juice served chilled with black salt.'
   },
   {
@@ -1368,7 +1368,7 @@ export const INITIAL_MENU_ITEMS = [
     category: 'Cutting Chai & Juices',
     isVeg: true,
     isAvailable: true,
-    image: 'https://images.unsplash.com/photo-1561336313-0bd5e0b27ec8?auto=format&fit=crop&w=400&q=80',
+    image: 'https://images.unsplash.com/photo-1600271886742-9829b545494a?auto=format&fit=crop&w=400&q=80',
     description: 'Thick mango pulp milkshake topped with vanilla ice cream scoop and dry fruits.'
   },
 
@@ -1381,7 +1381,7 @@ export const INITIAL_MENU_ITEMS = [
     category: 'Bhel & Sev Puri',
     isVeg: true,
     isAvailable: true,
-    image: 'https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=400&q=80',
+    image: 'https://images.unsplash.com/photo-1645177628172-a94c1f96e6db?auto=format&fit=crop&w=400&q=80',
     description: 'Crisp hollow puri filled with spiced potato ragda and teekha mint water.'
   },
 
@@ -1394,7 +1394,7 @@ export const INITIAL_MENU_ITEMS = [
     category: 'Bhel & Sev Puri',
     isVeg: true,
     isAvailable: true,
-    image: 'https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=400&q=80',
+    image: 'https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?auto=format&fit=crop&w=400&q=80',
     description: 'Crispy flat puri layered with boiled potatoes, onions, tamarind sweet chutney, spicy chilli chutney, and crisp nylon sev.'
   },
 
@@ -1433,7 +1433,7 @@ export const INITIAL_MENU_ITEMS = [
     category: 'Tibetan & Frankies',
     isVeg: false,
     isAvailable: true,
-    image: 'https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&w=400&q=80',
+    image: 'https://images.unsplash.com/photo-1585032226651-759b368d7246?auto=format&fit=crop&w=400&q=80',
     description: 'Crispy crunchy coated fried chicken dumplings served with spicy garlic red chilli mayo.'
   },
 
