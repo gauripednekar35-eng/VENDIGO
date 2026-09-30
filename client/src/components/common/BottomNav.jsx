@@ -1,5 +1,5 @@
 import React from 'react';
-import { Home, Map, Heart, User, LayoutDashboard } from 'lucide-react';
+import { Home, Map, Heart, User, LayoutDashboard, Search } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 
 export const BottomNav = ({ activeTab, setActiveTab }) => {
@@ -7,10 +7,11 @@ export const BottomNav = ({ activeTab, setActiveTab }) => {
   const isVendor = user?.role === 'vendor';
 
   const customerTabs = [
-    { id: 'home', label: 'Home', icon: Home },
-    { id: 'map', label: 'Map', icon: Map },
-    { id: 'favorites', label: 'Favorites', icon: Heart },
-    { id: 'profile', label: 'Profile', icon: User },
+    { id: 'home',      label: 'Home',    icon: Home },
+    { id: 'search',    label: 'Explore', icon: Search },
+    { id: 'map',       label: 'Map',     icon: Map },
+    { id: 'favorites', label: 'Saved',   icon: Heart },
+    { id: 'profile',   label: 'Profile', icon: User },
   ];
 
   const vendorTabs = [

@@ -1,9 +1,9 @@
 import React from 'react';
 import { useVendors } from '../context/VendorContext';
 import { useFavorites } from '../context/FavoritesContext';
-import { Star, Heart, MoreVertical, MapPin, ShoppingBag } from 'lucide-react';
+import { Star, Heart, MoreVertical, MapPin, ShoppingBag, ArrowLeft } from 'lucide-react';
 
-export const FavoritesPage = ({ onSelectVendor, onExplore }) => {
+export const FavoritesPage = ({ onSelectVendor, onExplore, onBack }) => {
   const { vendors } = useVendors();
   const { favorites, toggleFavorite } = useFavorites();
 
@@ -14,14 +14,25 @@ export const FavoritesPage = ({ onSelectVendor, onExplore }) => {
       
       {/* Header */}
       <div className="flex items-center justify-between pb-2 border-b border-slate-800/80">
-        <div>
-          <h1 className="text-2xl font-black text-white">My Favorites</h1>
-          <p className="text-xs text-slate-400">Your saved street food stalls & vendors</p>
+        <div className="flex items-center gap-3">
+          {onBack && (
+            <button
+              onClick={onBack}
+              className="p-2 rounded-xl bg-dark-card border border-slate-700 text-slate-300 hover:text-white hover:border-slate-500 transition-all flex-shrink-0"
+            >
+              <ArrowLeft className="w-4 h-4" />
+            </button>
+          )}
+          <div>
+            <h1 className="text-2xl font-black text-white">My Favorites</h1>
+            <p className="text-xs text-slate-400">Your saved street food stalls & vendors</p>
+          </div>
         </div>
         <span className="text-xs font-semibold px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
           {favoriteVendors.length} Saved
         </span>
       </div>
+
 
       {favoriteVendors.length === 0 ? (
         <div className="bg-dark-card rounded-3xl p-10 text-center border border-slate-800/80 max-w-md mx-auto space-y-4 my-8">

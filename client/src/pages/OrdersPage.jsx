@@ -1,10 +1,10 @@
 import React from 'react';
 import { useOrders } from '../context/OrderContext';
 import { useAuth } from '../context/AuthContext';
-import { ShoppingBag, Clock, CheckCircle2, AlertCircle, MapPin, Phone, ShieldCheck } from 'lucide-react';
+import { ShoppingBag, Clock, CheckCircle2, AlertCircle, MapPin, Phone, ShieldCheck, ArrowLeft } from 'lucide-react';
 import { EmptyState } from '../components/common/EmptyState';
 
-export const OrdersPage = ({ onExploreMore }) => {
+export const OrdersPage = ({ onExploreMore, onBack }) => {
   const { user } = useAuth();
   const { getOrdersForCustomer, fetchOrders } = useOrders();
 
@@ -43,14 +43,23 @@ export const OrdersPage = ({ onExploreMore }) => {
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 animate-in fade-in duration-300">
       
       <div className="flex items-center justify-between border-b border-slate-200 pb-4">
-        <div>
-          <h1 className="text-2xl font-extrabold text-slate-900 tracking-tight flex items-center gap-2">
-            <ShoppingBag className="w-6 h-6 text-primary" />
-            <span>My Street Food Orders</span>
-          </h1>
-          <p className="text-xs text-slate-500 mt-1">Track live order status and view Cash on Delivery order history.</p>
+        <div className="flex items-center gap-3">
+          {onBack && (
+            <button
+              onClick={onBack}
+              className="p-2 rounded-xl bg-slate-100 border border-slate-200 text-slate-600 hover:text-slate-900 hover:border-slate-400 transition-all flex-shrink-0"
+            >
+              <ArrowLeft className="w-4 h-4" />
+            </button>
+          )}
+          <div>
+            <h1 className="text-2xl font-extrabold text-slate-900 tracking-tight flex items-center gap-2">
+              <ShoppingBag className="w-6 h-6 text-primary" />
+              <span>My Street Food Orders</span>
+            </h1>
+            <p className="text-xs text-slate-500 mt-1">Track live order status and view Cash on Delivery order history.</p>
+          </div>
         </div>
-
         <span className="px-3 py-1 rounded-full bg-primary-50 text-primary text-xs font-extrabold">
           {customerOrders.length} Orders
         </span>

@@ -57,9 +57,20 @@ export const AuthProvider = ({ children }) => {
       showToast(`Welcome back, ${data.user.name}! Logged in as ${data.user.role.toUpperCase()}`);
       return { success: true, user: data.user };
     } catch (error) {
-      console.error('Login error:', error);
-      showToast('Server is currently offline or unreachable.', 'error');
-      return { success: false, message: 'Server connection error' };
+      // Server offline – use demo/offline mode
+      console.warn('Server offline, using demo login:', error.message);
+      const demoUser = {
+        id: 'demo_' + Date.now(),
+        name: email.split('@')[0].replace(/[._]/g, ' ').replace(/\b\w/g, c => c.toUpperCase()),
+        email,
+        role,
+        phone: '',
+        address: 'Bangalore, India',
+      };
+      setUser(demoUser);
+      setToken('demo_token_' + Date.now());
+      showToast(`Welcome back, ${demoUser.name}! (Offline demo mode)`);
+      return { success: true, user: demoUser };
     }
   };
 
@@ -83,9 +94,20 @@ export const AuthProvider = ({ children }) => {
       showToast(`Registration successful! Welcome to VENDIGO, ${data.user.name}`);
       return { success: true, user: data.user };
     } catch (error) {
-      console.error('Registration error:', error);
-      showToast('Server is currently offline or unreachable.', 'error');
-      return { success: false, message: 'Server connection error' };
+      // Server offline – use demo/offline mode
+      console.warn('Server offline, using demo register:', error.message);
+      const demoUser = {
+        id: 'demo_' + Date.now(),
+        name: userData.name || userData.email?.split('@')[0] || 'User',
+        email: userData.email,
+        role: userData.role || 'customer',
+        phone: userData.phone || '',
+        address: userData.address || 'Bangalore, India',
+      };
+      setUser(demoUser);
+      setToken('demo_token_' + Date.now());
+      showToast(`Welcome to VENDIGO, ${demoUser.name}! (Offline demo mode)`);
+      return { success: true, user: demoUser };
     }
   };
 

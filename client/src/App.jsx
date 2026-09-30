@@ -1,4 +1,4 @@
-import React, { useState, Component } from 'react';
+import React, { useState, useEffect, Component } from 'react';
 
 // Error Boundary to catch crashes and show a useful message instead of blank screen
 class ErrorBoundary extends Component {
@@ -50,11 +50,18 @@ const AppContent = () => {
   // Quick splash check (session storage so returning visits are instant)
   const [showSplash, setShowSplash] = useState(true);
 
-  const [activeTab, setActiveTab] = useState('home'); // home, search, map, favorites, profile, vendor-details, orders, vendor-dashboard, admin-dashboard, auth
+  const [activeTab, setActiveTab] = useState('home');
   const [selectedVendor, setSelectedVendor] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [selectedLocation, setSelectedLocation] = useState('all');
+
+  // Redirect to auth page when user logs out
+  useEffect(() => {
+    if (!user && !showSplash && activeTab !== 'auth') {
+      setActiveTab('auth');
+    }
+  }, [user]);
 
   const handleSelectVendor = (vendor) => {
     console.log('🏪 handleSelectVendor called with:', vendor);
@@ -112,6 +119,7 @@ const AppContent = () => {
           <SearchPage
             selectedLocation={selectedLocation}
             onSelectVendor={handleSelectVendor}
+            onBack={() => setActiveTab('home')}
           />
         )}
 
@@ -119,6 +127,7 @@ const AppContent = () => {
           <FavoritesPage
             onSelectVendor={handleSelectVendor}
             onExplore={() => setActiveTab('home')}
+            onBack={() => setActiveTab('home')}
           />
         )}
 
@@ -134,6 +143,7 @@ const AppContent = () => {
         {activeTab === 'orders' && (
           <OrdersPage
             onExploreMore={() => setActiveTab('home')}
+            onBack={() => setActiveTab('home')}
           />
         )}
 
@@ -167,13 +177,14 @@ const AppContent = () => {
       </main>
       )} {/* end non-map pages */}
 
-      {/* MAP PAGE - Full viewport, rendered outside <main> so h-screen works on mobile */}
+      {/* MAP PAGE - Full viewport on mobile, sits below DesktopNavbar on desktop */}
       {activeTab === 'map' && (
-        <div style={{ position: 'fixed', inset: 0, zIndex: 50 }}>
+        <div className="fixed inset-0 md:top-[72px] z-40">
           <MapPage
             selectedLocation={selectedLocation}
             setSelectedLocation={setSelectedLocation}
             onSelectVendor={handleSelectVendor}
+            onBack={() => setActiveTab('home')}
           />
         </div>
       )}

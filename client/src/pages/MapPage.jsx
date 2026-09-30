@@ -6,7 +6,7 @@ import { useVendors } from '../context/VendorContext';
 import { useFavorites } from '../context/FavoritesContext';
 import { TopHeader } from '../components/common/TopHeader';
 import { matchVendorLocation } from '../utils/locationHelper';
-import { Star, Navigation, Heart, Search, Compass } from 'lucide-react';
+import { Star, Navigation, Heart, Search, Compass, ArrowLeft } from 'lucide-react';
 
 // Lazy-load heavy Leaflet route tracker modal
 const LiveRouteTrackerModal = lazy(() =>
@@ -25,7 +25,7 @@ const getPinIcon = (color = '#059669') => L.divIcon({
 });
 
 
-export const MapPage = ({ selectedLocation, setSelectedLocation, onSelectVendor }) => {
+export const MapPage = ({ selectedLocation, setSelectedLocation, onSelectVendor, onBack }) => {
   const { vendors } = useVendors();
   const { isFavorite, toggleFavorite } = useFavorites();
   const [activeVendor, setActiveVendor] = useState(vendors[0] || null);
@@ -85,6 +85,7 @@ export const MapPage = ({ selectedLocation, setSelectedLocation, onSelectVendor 
       <TopHeader
         selectedLocation={selectedLocation}
         setSelectedLocation={setSelectedLocation}
+        onBack={onBack}
       />
 
       {/* Mobile Filter Chips Bar */}
@@ -111,6 +112,15 @@ export const MapPage = ({ selectedLocation, setSelectedLocation, onSelectVendor 
         
         {/* Filters & Search Header */}
         <div className="p-4 space-y-3 border-b border-slate-700 bg-[#0F172A]">
+          {onBack && (
+            <button
+              onClick={onBack}
+              className="inline-flex items-center space-x-2 text-xs font-bold text-slate-300 hover:text-white mb-2 transition-colors"
+            >
+              <ArrowLeft className="w-4 h-4" />
+              <span>Back to Discovery</span>
+            </button>
+          )}
           <div className="relative">
             <input
               type="text"

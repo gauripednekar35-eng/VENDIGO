@@ -1,7 +1,8 @@
+import React, { useState } from 'react';
 import { useVendors } from '../context/VendorContext';
 import { useFavorites } from '../context/FavoritesContext';
 import { matchVendorLocation } from '../utils/locationHelper';
-import { Search, SlidersHorizontal, Star, Heart, X, ChevronDown, Check } from 'lucide-react';
+import { Search, SlidersHorizontal, Star, Heart, X, ChevronDown, Check, ArrowLeft } from 'lucide-react';
 
 const CATEGORY_FILTERS = [
   { id: 'all',       label: '🍽️ All' },
@@ -25,7 +26,7 @@ const SORT_OPTIONS = [
   { id: 'newest',    label: 'Newly Added' },
 ];
 
-export const SearchPage = ({ selectedLocation, onSelectVendor }) => {
+export const SearchPage = ({ selectedLocation, onSelectVendor, onBack }) => {
   const { vendors } = useVendors();
   const { isFavorite, toggleFavorite } = useFavorites();
 
@@ -89,7 +90,17 @@ export const SearchPage = ({ selectedLocation, onSelectVendor }) => {
     <div className="min-h-screen bg-[#0B0F17] text-slate-100 pb-24 pt-6 px-4 max-w-7xl mx-auto space-y-5 animate-fade-in">
 
       {/* Header */}
-      <h1 className="text-2xl font-black text-white">Explore Street Food Vendors</h1>
+      <div className="flex items-center gap-3">
+        {onBack && (
+          <button
+            onClick={onBack}
+            className="p-2 rounded-xl bg-[#1E293B] border border-slate-700 text-slate-300 hover:text-white hover:border-slate-500 transition-all flex-shrink-0"
+          >
+            <ArrowLeft className="w-4 h-4" />
+          </button>
+        )}
+        <h1 className="text-2xl font-black text-white">Explore Street Food Vendors</h1>
+      </div>
 
       {/* Search + Sort Row */}
       <div className="flex items-center gap-3">

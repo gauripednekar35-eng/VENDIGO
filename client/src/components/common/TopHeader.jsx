@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Bell, X, Package, Tag, MapPin, Star, ChevronRight } from 'lucide-react';
+import { Bell, X, Package, Tag, MapPin, Star, ChevronRight, ArrowLeft } from 'lucide-react';
 import { CustomLocationDropdown } from './CustomLocationDropdown';
 
 const MOCK_NOTIFICATIONS = [
@@ -45,7 +45,7 @@ const MOCK_NOTIFICATIONS = [
   },
 ];
 
-export const TopHeader = ({ selectedLocation, setSelectedLocation }) => {
+export const TopHeader = ({ selectedLocation, setSelectedLocation, onBack }) => {
   const [showNotifications, setShowNotifications] = useState(false);
   const [notifications, setNotifications] = useState(MOCK_NOTIFICATIONS);
 
@@ -60,12 +60,19 @@ export const TopHeader = ({ selectedLocation, setSelectedLocation }) => {
       <header className="md:hidden sticky top-0 z-30 bg-[#0F172A]/95 backdrop-blur-md border-b border-slate-800/80 px-4 py-3">
         <div className="max-w-md mx-auto flex items-center justify-between">
           
-          {/* Custom Location Dropdown */}
-          <CustomLocationDropdown
-            selectedLocation={selectedLocation}
-            setSelectedLocation={setSelectedLocation}
-            isMobile={true}
-          />
+          <div className="flex items-center gap-2">
+            {onBack && (
+              <button onClick={onBack} className="p-1.5 -ml-1.5 text-slate-300 hover:text-white rounded-full bg-[#1E293B] border border-slate-700/60 active:scale-95 transition-all">
+                <ArrowLeft className="w-4 h-4" />
+              </button>
+            )}
+            {/* Custom Location Dropdown */}
+            <CustomLocationDropdown
+              selectedLocation={selectedLocation}
+              setSelectedLocation={setSelectedLocation}
+              isMobile={true}
+            />
+          </div>
 
           {/* Bell Notification Button */}
           <button
