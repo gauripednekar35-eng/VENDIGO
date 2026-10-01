@@ -3,15 +3,23 @@ import { MapPin, ChevronDown, Check } from 'lucide-react';
 
 const LOCATIONS = [
   { id: 'all',          name: 'All Locations',                city: '' },
+  { id: 'all-mumbai',   name: 'All Mumbai',                   city: 'Mumbai' },
+  { id: 'andheri-w',   name: 'Andheri West, Mumbai',          city: 'Mumbai' },
+  { id: 'bandra-w',    name: 'Bandra West, Mumbai',           city: 'Mumbai' },
+  { id: 'borivali-w',  name: 'Borivali West, Mumbai',         city: 'Mumbai' },
+  { id: 'dahisar-w',   name: 'Dahisar West, Mumbai',          city: 'Mumbai' },
+  { id: 'dahisar-e',   name: 'Dahisar East, Mumbai',          city: 'Mumbai' },
+  { id: 'kandivali-w', name: 'Kandivali West, Mumbai',        city: 'Mumbai' },
+  { id: 'malad-w',     name: 'Malad West, Mumbai',            city: 'Mumbai' },
+  { id: 'dadar-w',     name: 'Dadar West, Mumbai',            city: 'Mumbai' },
+  { id: 'colaba',      name: 'Colaba / CST, Mumbai',          city: 'Mumbai' },
+  { id: 'ghatkopar-e', name: 'Ghatkopar East, Mumbai',        city: 'Mumbai' },
+  { id: 'thane-w',     name: 'Thane West, MMR',               city: 'Mumbai' },
   { id: 'indiranagar', name: 'Indiranagar, Bangalore',        city: 'Bangalore' },
   { id: 'koramangala', name: 'Koramangala, Bangalore',        city: 'Bangalore' },
   { id: 'vvpuram',     name: 'Jayanagar & VV Puram, Bangalore', city: 'Bangalore' },
   { id: 'hsr',          name: 'HSR Layout, Bangalore',        city: 'Bangalore' },
-  { id: 'mgroad',       name: 'MG Road & Commercial St, Bangalore', city: 'Bangalore' },
-  { id: 'dahisar-w',   name: 'Dahisar West, Mumbai',          city: 'Mumbai' },
-  { id: 'borivali-w',  name: 'Borivali West, Mumbai',         city: 'Mumbai' },
-  { id: 'bandra-w',    name: 'Bandra West, Mumbai',           city: 'Mumbai' },
-  { id: 'andheri-w',   name: 'Andheri West, Mumbai',          city: 'Mumbai' }
+  { id: 'mgroad',       name: 'MG Road & Commercial St, Bangalore', city: 'Bangalore' }
 ];
 
 export const CustomLocationDropdown = ({ selectedLocation, setSelectedLocation, isMobile = false }) => {
