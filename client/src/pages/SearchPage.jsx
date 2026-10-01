@@ -50,17 +50,46 @@ export const SearchPage = ({ selectedLocation, onSelectVendor, onBack }) => {
   ].filter(Boolean).length;
 
   const matchesCategory = (v) => {
-    if (activeFilter === 'open')     return v.isOpen !== false;
+    const text = (v.name + ' ' + (v.category || '') + ' ' + (v.tags || []).join(' ') + ' ' + (v.description || '')).toLowerCase();
+
+    if (activeFilter === 'open') return v.isOpen !== false;
     if (activeFilter === 'topRated') return (v.rating || 0) >= 4.5;
-    if (activeFilter === 'under50')  return (v.minPrice || 30) <= 50;
-    if (activeFilter === 'veg')      return v.isVeg === true || v.category?.toLowerCase().includes('veg');
-    if (activeFilter === 'fastFood') return v.category?.toLowerCase().includes('fast') || v.category?.toLowerCase().includes('burger');
-    if (activeFilter === 'chai')     return v.category?.toLowerCase().includes('chai') || v.category?.toLowerCase().includes('snack');
-    if (activeFilter === 'biryani')  return v.category?.toLowerCase().includes('biryani') || v.category?.toLowerCase().includes('rice');
-    if (activeFilter === 'momos')    return v.category?.toLowerCase().includes('momo') || v.category?.toLowerCase().includes('chinese');
-    if (activeFilter === 'juice')    return v.category?.toLowerCase().includes('juice') || v.category?.toLowerCase().includes('beverage') || v.category?.toLowerCase().includes('drink');
-    if (activeFilter === 'dosa')     return v.category?.toLowerCase().includes('dosa') || v.category?.toLowerCase().includes('south');
-    if (activeFilter === 'chaat')    return v.category?.toLowerCase().includes('chaat') || v.category?.toLowerCase().includes('puri');
+    if (activeFilter === 'under50') {
+      const priceVal = parseInt((v.priceForTwo || '').replace(/[^0-9]/g, '')) || 80;
+      return priceVal <= 100 || (v.minPrice && v.minPrice <= 50);
+    }
+    if (activeFilter === 'veg') {
+      if (v.isVeg === false) return false;
+      const isNonVeg = text.includes('chicken') || text.includes('fish') || text.includes('mutton') || text.includes('kebab') || text.includes('non-veg') || text.includes('shawarma');
+      return !isNonVeg;
+    }
+    if (activeFilter === 'fastFood') {
+      const cat = (v.category || '').toLowerCase();
+      return cat.includes('vada') || cat.includes('sandwich') || cat.includes('pav') || cat.includes('frankie') || cat.includes('momo') || cat.includes('fast') || text.includes('burger') || text.includes('pizza') || text.includes('toast') || text.includes('chinese') || text.includes('hakka');
+    }
+    if (activeFilter === 'chai') {
+      const cat = (v.category || '').toLowerCase();
+      return cat.includes('beverage') || cat.includes('chai') || text.includes('tea') || text.includes('juice') || text.includes('coffee') || text.includes('snack') || text.includes('bhajji') || text.includes('samosa') || text.includes('bhel') || text.includes('shake');
+    }
+    if (activeFilter === 'biryani') {
+      return text.includes('biryani') || text.includes('pulav') || text.includes('pulao') || text.includes('rice') || text.includes('bath');
+    }
+    if (activeFilter === 'momos') {
+      const cat = (v.category || '').toLowerCase();
+      return cat.includes('frankie') || cat.includes('momo') || text.includes('momo') || text.includes('dumpling') || text.includes('chinese') || text.includes('wok') || text.includes('noodle');
+    }
+    if (activeFilter === 'juice') {
+      const cat = (v.category || '').toLowerCase();
+      return cat.includes('beverage') || cat.includes('juice') || text.includes('juice') || text.includes('shake') || text.includes('mastani') || text.includes('drink') || text.includes('smoothie');
+    }
+    if (activeFilter === 'dosa') {
+      const cat = (v.category || '').toLowerCase();
+      return cat.includes('dosa') || text.includes('dosa') || text.includes('south') || text.includes('idli') || text.includes('vada') || text.includes('uttapam');
+    }
+    if (activeFilter === 'chaat') {
+      const cat = (v.category || '').toLowerCase();
+      return cat.includes('chaat') || text.includes('chaat') || text.includes('bhel') || text.includes('puri') || text.includes('ragda') || text.includes('pattice');
+    }
     return true;
   };
 
@@ -69,10 +98,11 @@ export const SearchPage = ({ selectedLocation, onSelectVendor, onBack }) => {
 
     const matchesQuery = !query ||
       v.name.toLowerCase().includes(query.toLowerCase()) ||
-      v.category.toLowerCase().includes(query.toLowerCase());
+      v.category.toLowerCase().includes(query.toLowerCase()) ||
+      (v.tags || []).some(t => t.toLowerCase().includes(query.toLowerCase()));
     if (!matchesQuery) return false;
     if (!matchesCategory(v)) return false;
-    if (vegOnly && !(v.isVeg === true || v.category?.toLowerCase().includes('veg'))) return false;
+    if (vegOnly && v.isVeg === false) return false;
     if ((v.rating || 0) < minRating) return false;
     const dist = parseFloat(v.distance || '0.3');
     if (dist > maxDistance) return false;
