@@ -7,10 +7,12 @@ const API_BASE_URL = import.meta.env.VITE_API_URL || '/api';
 // ── First-install clear ──────────────────────────────────────────────────────
 // On the very first time this app opens (no install flag in localStorage),
 // wipe any stale auth so the user always sees the login screen fresh.
-const INSTALL_FLAG = 'vendigo_installed_v1';
+const INSTALL_FLAG = 'vendigo_installed_v2';
 if (!localStorage.getItem(INSTALL_FLAG)) {
   localStorage.removeItem('vendigo_user');
   localStorage.removeItem('vendigo_token');
+  // Clear old flag too
+  localStorage.removeItem('vendigo_installed_v1');
   localStorage.setItem(INSTALL_FLAG, '1');
 }
 // ─────────────────────────────────────────────────────────────────────────────

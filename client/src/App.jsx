@@ -49,8 +49,8 @@ const AppContent = () => {
   
   // Quick splash check (session storage so returning visits are instant)
   const [showSplash, setShowSplash] = useState(true);
-  // skipped = user dismissed auth screen without logging in
-  const [skipped, setSkipped] = useState(false);
+  // Auth modal — shows as popup over home when not logged in
+  const [showAuthModal, setShowAuthModal] = useState(false);
 
   const [activeTab, setActiveTab] = useState('home');
   const [selectedVendor, setSelectedVendor] = useState(null);
@@ -61,8 +61,6 @@ const AppContent = () => {
   // Push browser history state whenever tab changes so device back button works
   useEffect(() => {
     if (showSplash) return;
-    if (activeTab === 'auth') return;
-    // Replace state for home so back doesn't exit the app, push for all others
     if (activeTab === 'home') {
       window.history.replaceState({ tab: 'home' }, '', window.location.pathname);
     } else {
@@ -80,16 +78,15 @@ const AppContent = () => {
     return () => window.removeEventListener('popstate', handlePopState);
   }, []);
 
-  // Redirect to auth when logged out — but NOT if user skipped auth
+  // After splash finishes, show auth modal if not logged in
   useEffect(() => {
-    if (!user && !showSplash && !skipped && activeTab !== 'auth') {
-      setActiveTab('auth');
+    if (!showSplash && !user) {
+      setShowAuthModal(true);
     }
-  }, [user]);
+  }, [showSplash, user]);
 
   const handleSkipAuth = () => {
-    setSkipped(true);
-    setActiveTab('home');
+    setShowAuthModal(false);
   };
 
   const handleSelectVendor = (vendor) => {
@@ -116,19 +113,32 @@ const AppContent = () => {
   return (
     <div className="min-h-screen bg-dark-bg text-slate-100 relative">
       
-      {/* DESKTOP NAVBAR (Visible on laptop/desktop screens md+) */}
-      {activeTab !== 'auth' && (
-        <DesktopNavbar
-          activeTab={activeTab}
-          setActiveTab={setActiveTab}
-          searchQuery={searchQuery}
-          setSearchQuery={setSearchQuery}
-          selectedLocation={selectedLocation}
-          setSelectedLocation={setSelectedLocation}
-        />
-      )}
+      {/* DESKTOP NAVBAR (always visible when not in splash) */}
+      <DesktopNavbar
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+        selectedLocation={selectedLocation}
+        setSelectedLocation={setSelectedLocation}
+      />
 
-      {/* Sign-in nudge for skipped users on certain actions */}
+      {/* AUTH POPUP MODAL — overlays on top of home when not logged in */}
+      {showAuthModal && (
+        <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 animate-fade-in">
+          <div className="max-h-[90vh] overflow-y-auto w-full max-w-md">
+            <AuthPage
+              onSkip={handleSkipAuth}
+              onAuthSuccess={(userRole) => {
+                setShowAuthModal(false);
+                if (userRole === 'vendor') setActiveTab('vendor-dashboard');
+                else if (userRole === 'admin') setActiveTab('admin-dashboard');
+                else setActiveTab('home');
+              }}
+            />
+          </div>
+        </div>
+      )}
 
       {/* MAIN CONTENT AREA (non-map pages) */}
       {activeTab !== 'map' && (
@@ -180,7 +190,7 @@ const AppContent = () => {
 
         {activeTab === 'profile' && (
           <ProfilePage
-            onLoginClick={() => setActiveTab('auth')}
+            onLoginClick={() => setShowAuthModal(true)}
           />
         )}
 
@@ -190,18 +200,6 @@ const AppContent = () => {
 
         {activeTab === 'admin-dashboard' && (
           <AdminDashboardPage />
-        )}
-
-        {activeTab === 'auth' && (
-          <AuthPage
-            onSkip={handleSkipAuth}
-            onAuthSuccess={(userRole) => {
-              setSkipped(false);
-              if (userRole === 'vendor') setActiveTab('vendor-dashboard');
-              else if (userRole === 'admin') setActiveTab('admin-dashboard');
-              else setActiveTab('home');
-            }}
-          />
         )}
 
         {activeTab === '404' && (
