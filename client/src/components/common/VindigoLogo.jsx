@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const VindigoLogo = ({ size = 'md', showTagline = false, className = '' }) => {
+export const VENDIGOLogo = ({ size = 'md', showTagline = false, className = '' }) => {
   const sizeMap = {
     sm:  { img: 'w-8 h-8',   text: 'text-sm',  tagline: 'text-[8px]'  },
     md:  { img: 'w-10 h-10', text: 'text-base', tagline: 'text-[9px]'  },
@@ -15,8 +15,8 @@ export const VindigoLogo = ({ size = 'md', showTagline = false, className = '' }
     <div className={`flex items-center space-x-2.5 ${className}`}>
       {/* Logo Image — black bg is transparent-compatible */}
       <img
-        src="/vindigo-logo.png"
-        alt="VINDIGO Logo"
+        src="/VENDIGO-logo.png"
+        alt="VENDIGO Logo"
         className={`${s.img} object-contain rounded-xl`}
         style={{ mixBlendMode: 'screen' }}
       />

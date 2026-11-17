@@ -5,7 +5,7 @@ const FavoritesContext = createContext();
 export const FavoritesProvider = ({ children }) => {
   const [favorites, setFavorites] = useState(() => {
     try {
-      const saved = localStorage.getItem('vindigo_favorites');
+      const saved = localStorage.getItem('VENDIGO_favorites');
       return saved ? JSON.parse(saved) : [];
     } catch {
       return [];
@@ -13,7 +13,7 @@ export const FavoritesProvider = ({ children }) => {
   });
 
   useEffect(() => {
-    localStorage.setItem('vindigo_favorites', JSON.stringify(favorites));
+    localStorage.setItem('VENDIGO_favorites', JSON.stringify(favorites));
   }, [favorites]);
 
   const isFavorite = (vendorId) => favorites.includes(vendorId);

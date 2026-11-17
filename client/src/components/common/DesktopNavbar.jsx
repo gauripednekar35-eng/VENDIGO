@@ -2,7 +2,7 @@ import React from 'react';
 import { Home, Search, Map, Heart, User, ShoppingBag, MapPin, ChevronDown } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useCart } from '../../context/CartContext';
-import { VindigoLogo } from './VindigoLogo';
+import { VENDIGOLogo } from './VENDIGOLogo';
 import { CustomLocationDropdown } from './CustomLocationDropdown';
 
 export const DesktopNavbar = ({
@@ -41,12 +41,12 @@ export const DesktopNavbar = ({
     <header className="hidden md:block sticky top-0 z-50 bg-[#0F172A] border-b border-slate-700 shadow-2xl">
       <div className="max-w-7xl mx-auto px-6 py-3.5 flex items-center justify-between gap-6">
         
-        {/* Exact VINDIGO Logo */}
+        {/* Exact VENDIGO Logo */}
         <div
           onClick={() => setActiveTab(isVendor ? 'vendor-dashboard' : 'home')}
           className="cursor-pointer group hover:scale-105 transition-transform"
         >
-          <VindigoLogo size="md" showTagline={true} />
+          <VENDIGOLogo size="md" showTagline={true} />
         </div>
 
         {/* Custom Location Picker Dropdown */}

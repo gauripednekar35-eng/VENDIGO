@@ -146,7 +146,7 @@ export const VendorDetailsPage = ({ vendor, onBack }) => {
                 <button
                   onClick={() => {
                     if (navigator.share) {
-                      navigator.share({ title: v.name, text: `Check out ${v.name} on VINDIGO!`, url: window.location.href });
+                      navigator.share({ title: v.name, text: `Check out ${v.name} on VENDIGO!`, url: window.location.href });
                     }
                   }}
                   className="p-3.5 rounded-2xl bg-[#0F172A] border border-slate-700 text-slate-300 hover:text-emerald-400"

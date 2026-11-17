@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { auth, googleProvider, signInWithPopup, isFirebaseConfigured } from '../firebase';
 import { Mail, Lock, User, Phone, ArrowRight, Loader, Store, UserCheck, PhoneCall } from 'lucide-react';
-import { VindigoLogo } from '../components/common/VindigoLogo';
+import { VENDIGOLogo } from '../components/common/VENDIGOLogo';
 import { getRoleForEmail } from '../data/adminConfig';
 
 export const AuthPage = ({ onAuthSuccess, onSkip }) => {
@@ -101,7 +101,7 @@ export const AuthPage = ({ onAuthSuccess, onSkip }) => {
             )}
 
             <div className="flex flex-col items-center justify-center">
-              <VindigoLogo size="lg" showTagline={true} className="flex-col space-x-0 space-y-2" />
+              <VENDIGOLogo size="lg" showTagline={true} className="flex-col space-x-0 space-y-2" />
             </div>
 
             {/* Food Stall Image */}
@@ -197,7 +197,7 @@ export const AuthPage = ({ onAuthSuccess, onSkip }) => {
           <div className="space-y-6">
             <div className="text-center space-y-1">
               <h2 className="text-2xl font-bold text-white">Register as</h2>
-              <p className="text-xs text-slate-400">Choose how you want to join VINDIGO</p>
+              <p className="text-xs text-slate-400">Choose how you want to join VENDIGO</p>
             </div>
 
             <div className="space-y-4 pt-2">

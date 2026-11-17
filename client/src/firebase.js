@@ -1,4 +1,4 @@
-// Firebase configuration for VINDIGO
+// Firebase configuration for VENDIGO
 // To enable Google Sign-In:
 // 1. Go to https://console.firebase.google.com
 // 2. Create a project, enable Authentication → Google provider

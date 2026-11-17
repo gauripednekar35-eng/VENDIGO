@@ -82,7 +82,7 @@ export const LiveRouteTrackerModal = ({ vendor, onClose }) => {
   const instructions = [
     { text: 'Start on 100 Feet Road towards Main Street', dist: '100m', icon: '⬆️' },
     { text: `Turn right near Corner Cafe towards ${vendor?.name || 'Stall'}`, dist: '150m', icon: '➡️' },
-    { text: 'Arrive at Stall on your left. Look for Orange VINDIGO Sign!', dist: '100m', icon: '🎯' }
+    { text: 'Arrive at Stall on your left. Look for Orange VENDIGO Sign!', dist: '100m', icon: '🎯' }
   ];
 
   return (
