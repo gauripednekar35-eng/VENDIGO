@@ -15,7 +15,7 @@ export const VendigoLogo = ({ size = 'md', showTagline = false, className = '' }
     <div className={`flex items-center space-x-2.5 ${className}`}>
       {/* Logo Image — black bg is transparent-compatible */}
       <img
-        src="/VENDIGO-logo.png"
+        src="/vindigo-logo.png"
         alt="VENDIGO Logo"
         className={`${s.img} object-contain rounded-xl`}
         style={{ mixBlendMode: 'screen' }}
