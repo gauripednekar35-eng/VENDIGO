@@ -4,6 +4,17 @@ const AuthContext = createContext();
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || '/api';
 
+// ── First-install clear ──────────────────────────────────────────────────────
+// On the very first time this app opens (no install flag in localStorage),
+// wipe any stale auth so the user always sees the login screen fresh.
+const INSTALL_FLAG = 'vendigo_installed_v1';
+if (!localStorage.getItem(INSTALL_FLAG)) {
+  localStorage.removeItem('vendigo_user');
+  localStorage.removeItem('vendigo_token');
+  localStorage.setItem(INSTALL_FLAG, '1');
+}
+// ─────────────────────────────────────────────────────────────────────────────
+
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(() => {
     const savedUser = localStorage.getItem('vendigo_user');
@@ -13,6 +24,7 @@ export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(() => {
     return localStorage.getItem('vendigo_token') || null;
   });
+
 
   const [toastMessage, setToastMessage] = useState(null);
 
