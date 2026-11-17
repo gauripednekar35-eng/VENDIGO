@@ -49,6 +49,8 @@ const AppContent = () => {
   
   // Quick splash check (session storage so returning visits are instant)
   const [showSplash, setShowSplash] = useState(true);
+  // skipped = user dismissed auth screen without logging in
+  const [skipped, setSkipped] = useState(false);
 
   const [activeTab, setActiveTab] = useState('home');
   const [selectedVendor, setSelectedVendor] = useState(null);
@@ -78,12 +80,17 @@ const AppContent = () => {
     return () => window.removeEventListener('popstate', handlePopState);
   }, []);
 
-  // Redirect to auth page when user logs out
+  // Redirect to auth when logged out — but NOT if user skipped auth
   useEffect(() => {
-    if (!user && !showSplash && activeTab !== 'auth') {
+    if (!user && !showSplash && !skipped && activeTab !== 'auth') {
       setActiveTab('auth');
     }
   }, [user]);
+
+  const handleSkipAuth = () => {
+    setSkipped(true);
+    setActiveTab('home');
+  };
 
   const handleSelectVendor = (vendor) => {
     console.log('🏪 handleSelectVendor called with:', vendor);
@@ -120,6 +127,8 @@ const AppContent = () => {
           setSelectedLocation={setSelectedLocation}
         />
       )}
+
+      {/* Sign-in nudge for skipped users on certain actions */}
 
       {/* MAIN CONTENT AREA (non-map pages) */}
       {activeTab !== 'map' && (
@@ -185,7 +194,9 @@ const AppContent = () => {
 
         {activeTab === 'auth' && (
           <AuthPage
+            onSkip={handleSkipAuth}
             onAuthSuccess={(userRole) => {
+              setSkipped(false);
               if (userRole === 'vendor') setActiveTab('vendor-dashboard');
               else if (userRole === 'admin') setActiveTab('admin-dashboard');
               else setActiveTab('home');

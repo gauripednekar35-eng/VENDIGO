@@ -5,7 +5,7 @@ import { Mail, Lock, User, Phone, ArrowRight, Loader, Store, UserCheck, PhoneCal
 import { VindigoLogo } from '../components/common/VindigoLogo';
 import { getRoleForEmail } from '../data/adminConfig';
 
-export const AuthPage = ({ onAuthSuccess }) => {
+export const AuthPage = ({ onAuthSuccess, onSkip }) => {
   const { login, register, showToast } = useAuth();
   
   const [step, setStep] = useState('welcome');
@@ -87,6 +87,19 @@ export const AuthPage = ({ onAuthSuccess }) => {
         {/* STEP 1: WELCOME SCREEN */}
         {step === 'welcome' && (
           <div className="space-y-6 text-center">
+
+            {/* Skip button — top right */}
+            {onSkip && (
+              <div className="flex justify-end -mb-4">
+                <button
+                  onClick={onSkip}
+                  className="text-xs text-slate-500 hover:text-slate-300 transition-colors font-medium flex items-center gap-1"
+                >
+                  I'll do it later <span className="text-base leading-none">&rsaquo;</span>
+                </button>
+              </div>
+            )}
+
             <div className="flex flex-col items-center justify-center">
               <VindigoLogo size="lg" showTagline={true} className="flex-col space-x-0 space-y-2" />
             </div>
