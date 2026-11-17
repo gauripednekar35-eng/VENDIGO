@@ -122,21 +122,37 @@ export const VendorDashboardPage = () => {
     }
   };
 
+  const FOOD_CATEGORIES = [
+    'Vada Pav','Dosa & South Indian','Chaat','Biryani','Momos',
+    'Fast Food','Juice & Beverages','Chai & Snacks','Sandwich','Frankie','Pani Puri'
+  ];
+
   // ── Onboarding state (for brand-new vendors) ──
   const [onboardName,        setOnboardName]        = useState('');
-  const [onboardCategory,    setOnboardCategory]    = useState('Vada Pav');
+  const [onboardCategories,  setOnboardCategories]  = useState([]);
   const [onboardDescription, setOnboardDescription] = useState('');
   const [onboardAddress,     setOnboardAddress]     = useState('');
   const [onboardPhone,       setOnboardPhone]       = useState('');
   const [onboardSaving,      setOnboardSaving]      = useState(false);
 
+  const toggleOnboardCategory = (cat) => {
+    setOnboardCategories(prev =>
+      prev.includes(cat) ? prev.filter(c => c !== cat) : [...prev, cat]
+    );
+  };
+
   const handleOnboardSubmit = (e) => {
     e.preventDefault();
+    if (onboardCategories.length === 0) {
+      showToast('Please select at least one food category.', 'error');
+      return;
+    }
     setOnboardSaving(true);
     const newProfile = {
       id: `vendor_${user.id}`,
       name: onboardName,
-      category: onboardCategory,
+      category: onboardCategories[0],
+      categories: onboardCategories,
       description: onboardDescription,
       address: onboardAddress,
       phone: onboardPhone,
@@ -146,7 +162,7 @@ export const VendorDashboardPage = () => {
       closeTime: '22:00',
       rating: 0,
       reviews: 0,
-      tags: [onboardCategory],
+      tags: onboardCategories,
     };
     if (profileKey) localStorage.setItem(profileKey, JSON.stringify(newProfile));
     showToast('🎉 Your stall is set up! Start adding menu items.');
@@ -178,16 +194,34 @@ export const VendorDashboardPage = () => {
               />
             </div>
 
-            <div className="space-y-1.5">
-              <label className="text-xs font-bold text-slate-300">Food Category *</label>
-              <select
-                value={onboardCategory} onChange={e => setOnboardCategory(e.target.value)}
-                className="w-full px-4 py-3 rounded-xl bg-[#0F172A] border border-slate-700 text-white text-sm focus:outline-none focus:border-emerald-500"
-              >
-                {['Vada Pav','Dosa & South Indian','Chaat','Biryani','Momos','Fast Food','Juice & Beverages','Chai & Snacks','Sandwich','Frankie','Pani Puri'].map(c => (
-                  <option key={c} value={c}>{c}</option>
-                ))}
-              </select>
+            <div className="space-y-2">
+              <label className="text-xs font-bold text-slate-300">
+                Food Categories * <span className="text-slate-500 font-normal">(select all that apply)</span>
+              </label>
+              <div className="flex flex-wrap gap-2">
+                {FOOD_CATEGORIES.map(cat => {
+                  const selected = onboardCategories.includes(cat);
+                  return (
+                    <button
+                      key={cat}
+                      type="button"
+                      onClick={() => toggleOnboardCategory(cat)}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold border transition-all ${
+                        selected
+                          ? 'bg-emerald-500 border-emerald-500 text-white shadow-md scale-105'
+                          : 'bg-[#0F172A] border-slate-700 text-slate-400 hover:border-emerald-500/50 hover:text-slate-200'
+                      }`}
+                    >
+                      {selected && '✓ '}{cat}
+                    </button>
+                  );
+                })}
+              </div>
+              {onboardCategories.length > 0 && (
+                <p className="text-[11px] text-emerald-400 font-semibold">
+                  {onboardCategories.length} selected: {onboardCategories.join(', ')}
+                </p>
+              )}
             </div>
 
             <div className="space-y-1.5">
