@@ -1,9 +1,11 @@
 import React from 'react';
-import { Home, Map, Heart, User, LayoutDashboard, Search } from 'lucide-react';
+import { Home, Map, Heart, User, LayoutDashboard, Search, ShoppingCart } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
+import { useCart } from '../../context/CartContext';
 
 export const BottomNav = ({ activeTab, setActiveTab }) => {
   const { user } = useAuth();
+  const { totalCount, setIsCartOpen } = useCart();
   const isVendor = user?.role === 'vendor';
 
   const customerTabs = [
@@ -46,6 +48,24 @@ export const BottomNav = ({ activeTab, setActiveTab }) => {
             </button>
           );
         })}
+
+        {/* Cart button — only for customers */}
+        {!isVendor && (
+          <button
+            onClick={() => setIsCartOpen(true)}
+            className="flex flex-col items-center justify-center space-y-1 py-1 px-3 rounded-2xl transition-all text-slate-500 font-medium hover:text-orange relative"
+          >
+            <div className="relative">
+              <ShoppingCart className="w-5 h-5 stroke-2" />
+              {totalCount > 0 && (
+                <span className="absolute -top-2 -right-2 min-w-[18px] h-[18px] bg-orange text-white text-[9px] font-black rounded-full flex items-center justify-center px-1 shadow-lg animate-bounce-once">
+                  {totalCount > 99 ? '99+' : totalCount}
+                </span>
+              )}
+            </div>
+            <span className="text-[10px] tracking-tight">Cart</span>
+          </button>
+        )}
       </div>
     </nav>
   );
