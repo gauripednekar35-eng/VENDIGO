@@ -9,14 +9,28 @@ export const CartDrawer = ({ onOrderPlaced }) => {
   const { user, showToast } = useAuth();
   const { createOrder } = useOrders();
 
-  const [deliveryAddress, setDeliveryAddress] = useState(user?.address || 'Room 302, DU North Campus Hostel, Old Delhi');
-  const [phone, setPhone] = useState(user?.phone || '+91 98111 22233');
+  // Load phone from user-specific localStorage, never use a random fallback
+  const getSavedPhone = () => {
+    if (user?.phone) return user.phone;
+    if (user?.id) {
+      return localStorage.getItem(`vendigo_phone_${user.id}`) || '';
+    }
+    return '';
+  };
+
+  const [deliveryAddress, setDeliveryAddress] = useState(user?.address || '');
+  const [phone, setPhone] = useState(getSavedPhone);
   const [isPlacing, setIsPlacing] = useState(false);
 
   if (!isCartOpen) return null;
 
   const handlePlaceOrder = () => {
     if (cartItems.length === 0 || !activeVendor) return;
+
+    // Save this user's phone for next time
+    if (user?.id && phone) {
+      localStorage.setItem(`vendigo_phone_${user.id}`, phone);
+    }
 
     setIsPlacing(true);
 
