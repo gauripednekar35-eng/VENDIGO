@@ -163,7 +163,7 @@ export const HomePage = ({
             <h3 className="text-base font-bold text-white tracking-wide">Categories</h3>
           </div>
 
-          <div className="flex items-center space-x-3 overflow-x-auto scroll-hide py-1">
+          <div className="flex items-center space-x-3 overflow-x-auto scroll-hide py-2">
             {categories.map((cat) => {
               const Icon = cat.icon;
               const isActive = selectedCategory === cat.id;
@@ -180,11 +180,11 @@ export const HomePage = ({
                   }}
                   className={`flex flex-col md:flex-row items-center justify-center min-w-[76px] md:min-w-0 md:px-5 md:py-3 p-3 rounded-2xl border transition-all ${
                     isActive
-                      ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/50 shadow-emerald-glow scale-105'
+                      ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/50 shadow-emerald-glow'
                       : 'bg-[#1E293B] text-slate-400 border-slate-800 hover:border-slate-700 hover:text-slate-200'
                   }`}
                 >
-                  <div className={`p-2 rounded-xl mb-1 md:mb-0 md:mr-2 ${isActive ? 'bg-emerald-500 text-white' : 'bg-slate-800 text-slate-300'}`}>
+                  <div className={`p-2 rounded-xl mb-1 md:mb-0 md:mr-2 flex items-center justify-center ${isActive ? 'bg-emerald-500 text-white' : 'bg-slate-800 text-slate-300'}`}>
                     <Icon className="w-4 h-4" />
                   </div>
                   <span className="text-[11px] md:text-xs font-bold tracking-tight whitespace-nowrap">{cat.label}</span>
