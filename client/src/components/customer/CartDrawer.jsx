@@ -21,11 +21,21 @@ export const CartDrawer = ({ onOrderPlaced }) => {
   const [deliveryAddress, setDeliveryAddress] = useState(user?.address || '');
   const [phone, setPhone] = useState(getSavedPhone);
   const [isPlacing, setIsPlacing] = useState(false);
+  const [showPhonePrompt, setShowPhonePrompt] = useState(false);
 
   if (!isCartOpen) return null;
 
   const handlePlaceOrder = () => {
     if (cartItems.length === 0 || !activeVendor) return;
+
+    // Require phone number before placing order
+    if (!phone || phone.trim().length < 7) {
+      setShowPhonePrompt(true);
+      showToast('📞 Please add your contact number to place the order', 'error');
+      // Auto-hide prompt after 4s
+      setTimeout(() => setShowPhonePrompt(false), 4000);
+      return;
+    }
 
     // Save this user's phone for next time
     if (user?.id && phone) {
@@ -163,12 +173,19 @@ export const CartDrawer = ({ onOrderPlaced }) => {
                     </div>
 
                     <div className="space-y-1">
-                      <label className="text-[11px] font-bold text-slate-600">Contact Number</label>
+                      <label className={`text-[11px] font-bold flex items-center gap-1 ${showPhonePrompt ? 'text-red-500' : 'text-slate-600'}`}>
+                        📞 Contact Number {showPhonePrompt && <span className="text-red-500 font-bold">— Required to place order!</span>}
+                      </label>
                       <input
-                        type="text"
+                        type="tel"
                         value={phone}
-                        onChange={(e) => setPhone(e.target.value)}
-                        className="w-full text-xs p-2 rounded-lg bg-slate-50 border border-slate-200 focus:outline-none focus:border-primary"
+                        onChange={(e) => { setPhone(e.target.value); setShowPhonePrompt(false); }}
+                        placeholder="Enter your phone number"
+                        className={`w-full text-xs p-2 rounded-lg focus:outline-none transition-all ${
+                          showPhonePrompt
+                            ? 'bg-red-50 border-2 border-red-400 placeholder:text-red-400 animate-pulse'
+                            : 'bg-slate-50 border border-slate-200 focus:border-primary'
+                        }`}
                       />
                     </div>
                   </div>

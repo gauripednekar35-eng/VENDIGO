@@ -7,12 +7,12 @@ const API_BASE_URL = import.meta.env.VITE_API_URL || '/api';
 // ── First-install clear ──────────────────────────────────────────────────────
 // On the very first time this app opens (no install flag in localStorage),
 // wipe any stale auth so the user always sees the login screen fresh.
-const INSTALL_FLAG = 'vendigo_installed_v2';
+const INSTALL_FLAG = 'vendigo_installed_v3';
 if (!localStorage.getItem(INSTALL_FLAG)) {
   localStorage.removeItem('vendigo_user');
   localStorage.removeItem('vendigo_token');
-  // Clear old flag too
   localStorage.removeItem('vendigo_installed_v1');
+  localStorage.removeItem('vendigo_installed_v2');
   localStorage.setItem(INSTALL_FLAG, '1');
 }
 // ─────────────────────────────────────────────────────────────────────────────
@@ -81,8 +81,8 @@ export const AuthProvider = ({ children }) => {
         name: email.split('@')[0].replace(/[._]/g, ' ').replace(/\b\w/g, c => c.toUpperCase()),
         email,
         role,
-        phone: '+91 98000 00000',
-        address: 'Mumbai, India',
+        phone: '',
+        address: '',
       };
       setUser(demoUser);
       setToken('demo_token_' + Date.now());
@@ -121,8 +121,8 @@ export const AuthProvider = ({ children }) => {
         name: userData.name || userData.email?.split('@')[0] || 'User',
         email: userData.email,
         role: userData.role || 'customer',
-        phone: userData.phone || '+91 98000 00000',
-        address: userData.address || 'Mumbai, India',
+        phone: userData.phone || '',
+        address: userData.address || '',
       };
       setUser(demoUser);
       setToken('demo_token_' + Date.now());
