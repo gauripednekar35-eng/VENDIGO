@@ -56,6 +56,28 @@ const AppContent = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [selectedLocation, setSelectedLocation] = useState('all');
 
+  // Push browser history state whenever tab changes so device back button works
+  useEffect(() => {
+    if (showSplash) return;
+    if (activeTab === 'auth') return;
+    // Replace state for home so back doesn't exit the app, push for all others
+    if (activeTab === 'home') {
+      window.history.replaceState({ tab: 'home' }, '', window.location.pathname);
+    } else {
+      window.history.pushState({ tab: activeTab }, '', window.location.pathname);
+    }
+  }, [activeTab, showSplash]);
+
+  // Handle browser/phone back button — always go to home
+  useEffect(() => {
+    const handlePopState = (e) => {
+      const prevTab = e.state?.tab || 'home';
+      setActiveTab(prevTab);
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
   // Redirect to auth page when user logs out
   useEffect(() => {
     if (!user && !showSplash && activeTab !== 'auth') {
