@@ -13,8 +13,20 @@ export const VendorDashboardPage = () => {
   const { vendors, getVendorById, toggleVendorOpen, updateVendorDetails, getMenuItemsByVendor, fetchMenuItems, addMenuItem, updateMenuItem, deleteMenuItem, toggleMenuItemAvailability } = useVendors();
   const { getOrdersForVendor, updateOrderStatus, fetchOrders } = useOrders();
 
-  const vendorId = user?.vendorId || vendors[0]?.id;
-  const currentVendor = getVendorById(vendorId) || vendors[0];
+  // ── Per-user vendor profile stored in localStorage ──
+  const profileKey = user?.id ? `vendigo_vendor_profile_${user.id}` : null;
+  const savedProfile = profileKey ? JSON.parse(localStorage.getItem(profileKey) || 'null') : null;
+
+  // isNewVendor = true if this user has no linked vendor and no saved profile
+  const linkedVendorId = user?.vendorId;
+  const isNewVendor = !linkedVendorId && !savedProfile;
+
+  // currentVendor: use linked vendor → saved profile → nothing (new vendor)
+  const currentVendor = linkedVendorId
+    ? (getVendorById(linkedVendorId) || null)
+    : savedProfile
+      ? savedProfile
+      : null;
 
   React.useEffect(() => {
     if (currentVendor?.id) {
@@ -109,6 +121,116 @@ export const VendorDashboardPage = () => {
       setBpSaving(false);
     }
   };
+
+  // ── Onboarding state (for brand-new vendors) ──
+  const [onboardName,        setOnboardName]        = useState('');
+  const [onboardCategory,    setOnboardCategory]    = useState('Vada Pav');
+  const [onboardDescription, setOnboardDescription] = useState('');
+  const [onboardAddress,     setOnboardAddress]     = useState('');
+  const [onboardPhone,       setOnboardPhone]       = useState('');
+  const [onboardSaving,      setOnboardSaving]      = useState(false);
+
+  const handleOnboardSubmit = (e) => {
+    e.preventDefault();
+    setOnboardSaving(true);
+    const newProfile = {
+      id: `vendor_${user.id}`,
+      name: onboardName,
+      category: onboardCategory,
+      description: onboardDescription,
+      address: onboardAddress,
+      phone: onboardPhone,
+      isOpen: false,
+      banner: '',
+      openTime: '08:00',
+      closeTime: '22:00',
+      rating: 0,
+      reviews: 0,
+      tags: [onboardCategory],
+    };
+    if (profileKey) localStorage.setItem(profileKey, JSON.stringify(newProfile));
+    showToast('🎉 Your stall is set up! Start adding menu items.');
+    setOnboardSaving(false);
+    // Reload to pick up the new profile
+    window.location.reload();
+  };
+
+  // ── Show onboarding screen for new vendors ──
+  if (isNewVendor) {
+    return (
+      <div className="min-h-screen bg-[#0B0F17] text-slate-100 flex items-center justify-center p-4">
+        <div className="bg-[#1E293B] rounded-3xl p-6 sm:p-8 max-w-md w-full border border-slate-700 shadow-2xl space-y-6 animate-fade-in">
+          <div className="text-center space-y-2">
+            <div className="w-16 h-16 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mx-auto">
+              <Store className="w-8 h-8 text-emerald-400" />
+            </div>
+            <h1 className="text-2xl font-black text-white">Setup Your Stall 🏪</h1>
+            <p className="text-xs text-slate-400">Tell us about your food stall to get started on Vendigo</p>
+          </div>
+
+          <form onSubmit={handleOnboardSubmit} className="space-y-4">
+            <div className="space-y-1.5">
+              <label className="text-xs font-bold text-slate-300">Stall Name *</label>
+              <input
+                type="text" required value={onboardName} onChange={e => setOnboardName(e.target.value)}
+                placeholder="e.g. Rahul's Famous Vada Pav"
+                className="w-full px-4 py-3 rounded-xl bg-[#0F172A] border border-slate-700 text-white text-sm focus:outline-none focus:border-emerald-500 placeholder:text-slate-500"
+              />
+            </div>
+
+            <div className="space-y-1.5">
+              <label className="text-xs font-bold text-slate-300">Food Category *</label>
+              <select
+                value={onboardCategory} onChange={e => setOnboardCategory(e.target.value)}
+                className="w-full px-4 py-3 rounded-xl bg-[#0F172A] border border-slate-700 text-white text-sm focus:outline-none focus:border-emerald-500"
+              >
+                {['Vada Pav','Dosa & South Indian','Chaat','Biryani','Momos','Fast Food','Juice & Beverages','Chai & Snacks','Sandwich','Frankie','Pani Puri'].map(c => (
+                  <option key={c} value={c}>{c}</option>
+                ))}
+              </select>
+            </div>
+
+            <div className="space-y-1.5">
+              <label className="text-xs font-bold text-slate-300">Description</label>
+              <textarea
+                rows={2} value={onboardDescription} onChange={e => setOnboardDescription(e.target.value)}
+                placeholder="What makes your stall special?"
+                className="w-full px-4 py-3 rounded-xl bg-[#0F172A] border border-slate-700 text-white text-sm focus:outline-none focus:border-emerald-500 placeholder:text-slate-500 resize-none"
+              />
+            </div>
+
+            <div className="space-y-1.5">
+              <label className="text-xs font-bold text-slate-300">Stall Address *</label>
+              <input
+                type="text" required value={onboardAddress} onChange={e => setOnboardAddress(e.target.value)}
+                placeholder="e.g. Near Andheri Station, Gate 2, Mumbai"
+                className="w-full px-4 py-3 rounded-xl bg-[#0F172A] border border-slate-700 text-white text-sm focus:outline-none focus:border-emerald-500 placeholder:text-slate-500"
+              />
+            </div>
+
+            <div className="space-y-1.5">
+              <label className="text-xs font-bold text-slate-300">Phone Number</label>
+              <input
+                type="tel" value={onboardPhone} onChange={e => setOnboardPhone(e.target.value)}
+                placeholder="e.g. +91 98765 43210"
+                className="w-full px-4 py-3 rounded-xl bg-[#0F172A] border border-slate-700 text-white text-sm focus:outline-none focus:border-emerald-500 placeholder:text-slate-500"
+              />
+            </div>
+
+            <button
+              type="submit" disabled={onboardSaving}
+              className="w-full py-3.5 rounded-2xl bg-emerald-600 hover:bg-emerald-700 disabled:opacity-60 text-white font-black text-sm transition-all shadow-lg flex items-center justify-center space-x-2 mt-2"
+            >
+              {onboardSaving
+                ? <><div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /><span>Setting up...</span></>
+                : <><Store className="w-4 h-4" /><span>Launch My Stall 🚀</span></>
+              }
+            </button>
+          </form>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-[#0B0F17] text-slate-100 pb-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6 animate-fade-in">
