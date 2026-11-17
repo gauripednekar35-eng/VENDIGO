@@ -2,8 +2,13 @@ import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { User, Mail, Phone, MapPin, LogOut, Save } from 'lucide-react';
 
-export const ProfilePage = () => {
+export const ProfilePage = ({ onLoginClick }) => {
   const { user, updateProfile, logout, role } = useAuth();
+
+  const handleLogout = () => {
+    logout();
+    if (onLoginClick) onLoginClick();
+  };
 
   const [formData, setFormData] = useState({
     name: user?.name || '',
@@ -92,7 +97,7 @@ export const ProfilePage = () => {
           <div className="flex justify-between items-center pt-4 border-t border-slate-700">
             <button
               type="button"
-              onClick={logout}
+              onClick={handleLogout}
               className="px-5 py-3 rounded-xl text-red-400 border border-red-500/40 hover:bg-red-500/20 text-xs font-bold flex items-center space-x-1.5 transition-colors"
             >
               <LogOut className="w-4 h-4" />
