@@ -1,36 +1,36 @@
 {
-  "name": "VENDIGO - Street Food Discovery",
+  "name": "VENDIGO",
   "short_name": "VENDIGO",
-  "description": "Discover nearby authentic local street food vendors, explore menus, and order fresh delicious street food.",
+  "description": "Discover nearby authentic local street food vendors, explore menus, and support local.",
   "start_url": "/",
   "id": "/",
   "display": "standalone",
   "background_color": "#0f172a",
-  "theme_color": "#f97316",
+  "theme_color": "#0f172a",
   "orientation": "portrait-primary",
   "scope": "/",
   "icons": [
     {
-      "src": "/logo.png",
-      "sizes": "512x512",
+      "src": "/icon-192.png",
+      "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/logo.png",
-      "sizes": "512x512",
+      "src": "/icon-192.png",
+      "sizes": "192x192",
       "type": "image/png",
       "purpose": "maskable"
     },
     {
-      "src": "/icon-192.png",
-      "sizes": "192x192",
+      "src": "/logo.png",
+      "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/icon-192.png",
-      "sizes": "192x192",
+      "src": "/logo.png",
+      "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
     }
