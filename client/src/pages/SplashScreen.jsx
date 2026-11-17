@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { VENDIGOLogo } from '../components/common/VENDIGOLogo';
+import { VendigoLogo } from '../components/common/VendigoLogo';
 
 export const SplashScreen = ({ onFinish }) => {
   const [fade, setFade] = useState(false);
@@ -31,7 +31,7 @@ export const SplashScreen = ({ onFinish }) => {
       </div>
 
       <div className="flex flex-col items-center justify-center text-center px-6 my-auto">
-        <VENDIGOLogo size="xl" showTagline={true} className="flex-col space-x-0 space-y-4" />
+        <VendigoLogo size="xl" showTagline={true} className="flex-col space-x-0 space-y-4" />
       </div>
 
       <div className="pb-10 px-6 flex flex-col items-center space-y-3">

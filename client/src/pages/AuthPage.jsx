@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { auth, googleProvider, signInWithPopup, isFirebaseConfigured } from '../firebase';
 import { Mail, Lock, User, Phone, ArrowRight, Loader, Store, UserCheck, PhoneCall } from 'lucide-react';
-import { VENDIGOLogo } from '../components/common/VENDIGOLogo';
+import { VendigoLogo } from '../components/common/VendigoLogo';
 import { getRoleForEmail } from '../data/adminConfig';
 
 export const AuthPage = ({ onAuthSuccess, onSkip }) => {
@@ -101,7 +101,7 @@ export const AuthPage = ({ onAuthSuccess, onSkip }) => {
             )}
 
             <div className="flex flex-col items-center justify-center">
-              <VENDIGOLogo size="lg" showTagline={true} className="flex-col space-x-0 space-y-2" />
+              <VendigoLogo size="lg" showTagline={true} className="flex-col space-x-0 space-y-2" />
             </div>
 
             {/* Food Stall Image */}

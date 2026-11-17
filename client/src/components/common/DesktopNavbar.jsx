@@ -2,7 +2,7 @@ import React from 'react';
 import { Home, Search, Map, Heart, User, ShoppingBag, MapPin, ChevronDown } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useCart } from '../../context/CartContext';
-import { VENDIGOLogo } from './VENDIGOLogo';
+import { VendigoLogo } from './VendigoLogo';
 import { CustomLocationDropdown } from './CustomLocationDropdown';
 
 export const DesktopNavbar = ({
@@ -46,7 +46,7 @@ export const DesktopNavbar = ({
           onClick={() => setActiveTab(isVendor ? 'vendor-dashboard' : 'home')}
           className="cursor-pointer group hover:scale-105 transition-transform"
         >
-          <VENDIGOLogo size="md" showTagline={true} />
+          <VendigoLogo size="md" showTagline={true} />
         </div>
 
         {/* Custom Location Picker Dropdown */}

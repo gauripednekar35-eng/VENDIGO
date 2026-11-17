@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const VENDIGOLogo = ({ size = 'md', showTagline = false, className = '' }) => {
+export const VendigoLogo = ({ size = 'md', showTagline = false, className = '' }) => {
   const sizeMap = {
     sm:  { img: 'w-8 h-8',   text: 'text-sm',  tagline: 'text-[8px]'  },
     md:  { img: 'w-10 h-10', text: 'text-base', tagline: 'text-[9px]'  },
@@ -24,7 +24,7 @@ export const VENDIGOLogo = ({ size = 'md', showTagline = false, className = '' }
       {/* Brand Name + Tagline */}
       <div className="flex flex-col leading-tight">
         <span className={`${s.text} font-black tracking-tight text-white`}>
-          VIND<span className="text-orange-400">I</span>GO
+          VEND<span className="text-orange-400">I</span>GO
         </span>
         {showTagline && (
           <span className={`${s.tagline} text-slate-400 font-semibold tracking-wide uppercase`}>
