@@ -3,6 +3,7 @@ import { useAuth } from '../context/AuthContext';
 import { auth, googleProvider, signInWithPopup, isFirebaseConfigured } from '../firebase';
 import { Mail, Lock, User, Phone, ArrowRight, Loader, Store, UserCheck, PhoneCall } from 'lucide-react';
 import { VindigoLogo } from '../components/common/VindigoLogo';
+import { getRoleForEmail } from '../data/adminConfig';
 
 export const AuthPage = ({ onAuthSuccess }) => {
   const { login, register, showToast } = useAuth();
@@ -19,9 +20,7 @@ export const AuthPage = ({ onAuthSuccess }) => {
 
   const handleGoogleSignIn = async () => {
     if (!isFirebaseConfigured) {
-      showToast('Google Sign-In using demo account...', 'info');
-      const res = await login('customer@vendigo.com', 'customer123', 'customer');
-      if (res?.success && onAuthSuccess) onAuthSuccess(res.user?.role || 'customer');
+      showToast('Firebase not configured yet. See setup guide.', 'error');
       return;
     }
 
@@ -29,22 +28,34 @@ export const AuthPage = ({ onAuthSuccess }) => {
       setIsLoading(true);
       const result = await signInWithPopup(auth, googleProvider);
       const googleUser = result.user;
-      
+
+      // Auto-assign role based on email (admin/vendor/customer)
+      const assignedRole = getRoleForEmail(googleUser.email);
+
       const res = await register({
         name: googleUser.displayName || 'Google User',
         email: googleUser.email,
         password: googleUser.uid,
         phone: googleUser.phoneNumber || '',
-        role: role,
-        address: 'Bangalore, India'
+        role: assignedRole,
+        address: 'Mumbai, India'
       });
 
       if (res?.success && onAuthSuccess) {
-        onAuthSuccess(res.user?.role || role);
+        const finalRole = res.user?.role || assignedRole;
+        const roleLabel = finalRole === 'admin' ? '👑 Admin' : finalRole === 'vendor' ? '🏪 Vendor' : '🧑 Customer';
+        showToast(`Welcome, ${googleUser.displayName}! Signed in as ${roleLabel}`);
+        onAuthSuccess(finalRole);
       }
     } catch (err) {
       console.error('Google Sign In error:', err);
-      showToast('Google Sign-In failed', 'error');
+      if (err.code === 'auth/popup-closed-by-user') {
+        showToast('Sign-in cancelled', 'info');
+      } else if (err.code === 'auth/unauthorized-domain') {
+        showToast('Domain not authorized in Firebase. Add it in Firebase Console → Authentication → Settings.', 'error');
+      } else {
+        showToast('Google Sign-In failed: ' + (err.message || 'Unknown error'), 'error');
+      }
     } finally {
       setIsLoading(false);
     }
